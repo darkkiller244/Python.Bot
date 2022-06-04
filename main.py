@@ -34,6 +34,12 @@ client = commands.Bot(
     command_prefix='.', help_command=commands.MinimalHelpCommand())  # HelpCommand()
 
 
+# Event on Bot Startup
+@client.event
+async def on_ready():
+    print("{0.user}".format(client) + " initialized.")
+
+
 ## [FUNCTIONS] ##
 
 # Change prefix for player convience
@@ -122,9 +128,8 @@ async def unload(ctx, extension=None):
         client.unload_extension(f'cogs.{extension}')
         await ctx.send(f'{extension} has been successfully unloaded.')
 
+
 # Event on [reload] command usage
-
-
 @client.command()
 @commands.check(verify_author)
 async def reload(ctx, extension=None):
@@ -140,7 +145,22 @@ async def reload(ctx, extension=None):
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
 
-        # Removes last 3 characters of file name
+        # Removes last 3 characters of file name and loads extension
         client.load_extension(f'cogs.{filename[:-3]}')
+        print(filename + ' successfully loaded.')
 
-client.run(os.environ["DISCORD_TOKEN"])
+
+ ## [ERRORS] ##
+
+    @client.event
+    async def on_command_error(ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send('Please pass in all required arguments.')
+
+        if isinstance(error, commands.CommandNotFound):
+            await ctx.send('Command not found.')
+
+        if isinstance(error, commands.MissingPermissions):
+            await ctx.send('Invalid permissions to run this command.')
+
+client.run('OTgxMjIyMzk5MzUxNTkwOTIy.Gw1ul1.j0pdlHKNzEuAAKEAvnY1ler10eNkfF_0vh-oA4')

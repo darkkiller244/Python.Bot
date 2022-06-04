@@ -27,8 +27,8 @@ class Moderation(commands.Cog):
     ## [COMMANDS] ##
 
     # Event on [kick] command usage
-    @client.command()
-    @commands.has_permissions(kick_members=True)
+    @commands.command()
+    @commands.has_permissions(kick_members = True)
     async def kick(self, ctx, member: commands.MemberConverter, *, reason = None):
         if reason == None:
             await ctx.send(f'Incorrect Syntax:\n.kick [User] [Reason]')
@@ -38,7 +38,8 @@ class Moderation(commands.Cog):
 
 
     # Event on [ban] command usage
-    @client.command()
+
+    @commands.command()
     @commands.has_permissions(ban_members = True)
     async def ban(self, ctx, member: commands.MemberConverter, *, reason = None):
         if reason == None:
@@ -49,8 +50,9 @@ class Moderation(commands.Cog):
 
 
     # Event on [tempban] command usage
-    @client.comamnd()
-    @commands.has_permission(ban_members = True)
+
+    @commands.command()
+    @commands.has_permissions(ban_members = True)
     async def tempban(self, ctx, member: commands.MemberConverter, duration: DurationConverter, *, reason = None):
         if reason == None:
             await ctx.send(f'Incorrect Syntax:\n.ban [User] [Time] [Reason]')
@@ -65,7 +67,8 @@ class Moderation(commands.Cog):
 
 
     # Event on [unban] command usage
-    @client.command()
+
+    @commands.command()
     @commands.has_permissions(ban_members = True)
     async def unban(self, ctx, *, member):
         banned_users = await ctx.guild.bans()  # Guild = Server
@@ -81,7 +84,8 @@ class Moderation(commands.Cog):
 
 
     # Event on [clear] command usage
-    @client.command(aliases=['clear', 'purge', 'delete'])
+
+    @commands.command(aliases=['clear', 'purge', 'delete'])
     @commands.has_permissions(manage_messages = True)
     async def clear_chat(self, ctx, amount: int = 5, member: commands.MemberConverter = None):
 
@@ -93,7 +97,8 @@ class Moderation(commands.Cog):
 
 
     # Event on [test] command usage
-    @client.command()
+
+    @commands.command()
     async def test(self, ctx):
         if ctx.message.content.startswith(client.command_prefix):
             print('works')
@@ -102,7 +107,8 @@ class Moderation(commands.Cog):
 
 
     # Event on [tannounce] command usage
-    @client.command(aliases = ['tannounce', 'testembed', 'embedtest', 'tembed'])
+
+    @commands.command(aliases=['tannounce', 'testembed', 'embedtest', 'tembed'])
     async def test_embed(self, ctx):
 
         embedded_message = discord.Embed(
@@ -127,20 +133,6 @@ class Moderation(commands.Cog):
         embedded_message.set_footer(text = "Announcement by {}".format(ctx.author))
 
         await ctx.send(embed = embedded_message)
-
-    ## [ERRORS] ##
-
-    @client.event
-    async def on_command_error(ctx, error):
-        if isinstance(error, commands.MissingRequiredArgument):
-            await ctx.send('Please pass in all required arguments.')
-
-        if isinstance(error, commands.CommandNotFound):
-            await ctx.send('Command not found.')
-
-        if isinstance(error, commands.MissingPermissions):
-            await ctx.send('Invalid permissions to run this command.')
-
 
 
 def setup(client):
