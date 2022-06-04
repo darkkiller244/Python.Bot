@@ -163,4 +163,4 @@ for filename in os.listdir('./cogs'):
         if isinstance(error, commands.MissingPermissions):
             await ctx.send('Invalid permissions to run this command.')
 
-client.run('OTgxMjIyMzk5MzUxNTkwOTIy.Gw1ul1.j0pdlHKNzEuAAKEAvnY1ler10eNkfF_0vh-oA4')
+client.run(os.environ['DISCORD_TOKEN'])
