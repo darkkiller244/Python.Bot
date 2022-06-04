@@ -1,8 +1,11 @@
-import discord
 from discord.ext import commands
-from discord import Color
 import json
 import os
+
+
+# git add .
+# git commit -m 'Sent'
+# git push
 
 
 ## [CLASSES] ##
